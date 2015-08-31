@@ -11,10 +11,16 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Random;
+import java.util.Set;
+import java.util.TreeSet;
+
 
 public class MainActivity extends ActionBarActivity implements SensorEventListener {
     private SensorManager sensorManager;
-        private long lastUpdate;
+    private long lastUpdate;
 
 
     @Override
@@ -22,7 +28,7 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sensorManager = (SensorManager) getSystemService (SENSOR_SERVICE);
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         lastUpdate = System.currentTimeMillis();
 
     }
@@ -57,9 +63,9 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
         float y = values[1];
         float z = values[2];
 
-        TextView textView = (TextView) findViewById(R.id.text_view);
-        textView.setText(x + " , " + y + " , " + " , " +
-                "" + z);
+        //TextView textView = (TextView) findViewById(R.id.text_view);
+        //textView.setText(x + " , " + y + " , " + " , " +
+        //       "" + z);
 
         float accelationSquareRoot = (x * x + y * y + z * z)
                 / (SensorManager.GRAVITY_EARTH * SensorManager.GRAVITY_EARTH);
@@ -70,12 +76,61 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
                 return;
             }
             lastUpdate = actualTime;
-            Toast.makeText(this, "O celular foi balançado: " + accelationSquareRoot, Toast.LENGTH_SHORT)
-                    .show();
+            //Toast.makeText(this, "O celular foi balançado: " + accelationSquareRoot, Toast.LENGTH_SHORT)
+            //        .show();
+            sortear();
         }
+    }
+
+    public void sortear() {
+        // sortear os números
+        // Colocar eles nos textviews
+
+
+        Random gerador = new Random();
+        // comando Treeset deixa os números em ordem crescente
+        //Set<Integer> numeros = new TreeSet<Integer>();
+        // comando LinkedHashSet deixa os números desordenados
+
+
+        Set<Integer> numeros = new LinkedHashSet<Integer>();
+
+        while (numeros.size() < 6) {
+            numeros.add(gerador.nextInt(60) + 1);
+
+        }
+        Iterator<Integer> it = numeros.iterator();
+
+
+
+        TextView textView = (TextView) findViewById(R.id.text_view1);
+        textView.setText("Primeiro número da sorte  :  " + Integer.toString(it.next()));
+
+
+        TextView textView2 = (TextView) findViewById(R.id.text_view2);
+        textView2.setText("Segundo número da sorte  :  " + Integer.toString(it.next()));
+
+
+        TextView textView3 = (TextView) findViewById(R.id.text_view3);
+        textView3.setText("Terceiro número da sorte :  " + Integer.toString(it.next()));
+
+
+        TextView textView4 = (TextView) findViewById(R.id.text_view4);
+        textView4.setText("Quarto número da sorte   :  " + Integer.toString(it.next()));
+
+
+        TextView textView5 = (TextView) findViewById(R.id.text_view5);
+        textView5.setText("Quinto número da sorte   :  " + Integer.toString(it.next()));
+
+
+
+
+
 
 
     }
+
+
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
